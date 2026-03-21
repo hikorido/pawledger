@@ -15,7 +15,7 @@
 - [x] useContract hook
 
 ## Phase 3: Public Flows
-- [ ] Home page
+- [x] Home page
 - [ ] CaseBrowser page
 - [ ] CaseDetail page
 
