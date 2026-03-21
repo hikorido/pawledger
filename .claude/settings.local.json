@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Skill(update-config)",
+      "Bash(/usr/local/bin/claude config:*)",
+      "Bash(claude config:*)",
+      "Bash(/Users/lucca/.local/bin/claude config:*)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(grep -r \"cyan\\\\|theme\\\\|dark\\\\|light\" ~/.claude/ --include=*.json -l)"
+    ]
+  }
+}
