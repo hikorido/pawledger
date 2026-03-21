@@ -12,20 +12,45 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 projects/pawledger/
   src/
     contracts/          # Hardhat project (Solidity)
-      PawLedger.sol
-      ReviewerMultisig.sol
-      deploy.js
+      PawToken.sol      # ERC-20 governance token ($PAW), minted by PawLedger
+      PawLedger.sol     # Core escrow: cases, donations, milestones, reviewer logic
+      deploy.js         # Deployment script (PawToken → PawLedger → setMinter)
       hardhat.config.js
     ui/                 # React + Vite frontend
       src/
-        pages/          # Home, CaseDetail, SubmitCase, MilestoneFeed
-        components/     # CaseCard, ExpenseLedger, VotePanel, WalletConnect
-        hooks/          # useContract.js, useWallet.js
+        pages/
+          Home.jsx
+          CaseBrowser.jsx
+          CaseDetail.jsx
+          SubmitCase.jsx
+          RescuerDashboard.jsx
+          DonorDashboard.jsx
+          ReviewerDashboard.jsx
+        components/
+          layout/       # Navbar, Footer, RoleIndicator, LanguageToggle
+          case/         # CaseCard, FundingProgress, StatusBadge
+          milestone/    # MilestoneTimeline, VotePanel, ExpenseLedger
+          modals/       # DonateModal, TxConfirmation
+          review/       # ReviewCard
+          wallet/       # WalletConnect
+          common/       # Button, Card, Input, Modal, Loading
+        hooks/
+          useWallet.js
+          useContract.js
+          useCases.js
+          useMilestones.js
+          useReviewer.js
+          useDonor.js
+          useUserRole.js
+          useLocale.js
+        locales/
+          zh.json       # Chinese (default)
+          en.json       # English
+        config.js       # Contract addresses, network config
       vite.config.js
       package.json
   docs/
-    architecture.md
-    demo-script.md
+    prd.md
   README.md
 ```
 
@@ -55,36 +80,89 @@ npm run preview
 - **Testnet**: Avalanche Fuji (chainId `43113`)
 - **RPC**: `https://api.avax-test.network/ext/bc/C/rpc`
 - **Faucet**: `faucet.avax.network`
-- **Native currency**: AVAX (no ERC-20 needed for MVP)
+- **Native currency**: AVAX (for donations/escrow)
+- **Governance token**: $PAW (ERC-20, minted by PawLedger for reviewer rewards)
 
-Environment: create `src/contracts/.env` with `PRIVATE_KEY=<deployer_wallet_key>`. After deploy, copy the contract address into `src/ui/src/config.js`.
+Environment: create `src/contracts/.env` with `PRIVATE_KEY=<deployer_wallet_key>`. After deploy, copy both contract addresses into `src/ui/src/config.js`.
 
 ## Smart Contract Architecture
 
-`PawLedger.sol` is a milestone-locked escrow contract. Key state:
-- `Case` struct: rescuer, ipfsMetadata, goalAmount, raisedAmount, deadline, status (`PENDING | ACTIVE | CLOSED | REFUNDED`), milestonesCount
-- `Milestone` struct: evidenceIPFS, description, requestAmount, approveVotes, rejectVotes, released
+Two contracts (v2 — `ReviewerMultisig.sol` is **deprecated and removed**):
 
-**Voting**: vote weight ∝ donation proportion (not 1-wallet-1-vote). Release triggers at >50% approval; milestone is blocked if >30% rejects within 48h.
+### PawToken.sol
+- ERC-20, name: PawToken, symbol: $PAW, decimals: 18
+- Single minter address (set to PawLedger after deploy via `setMinter`)
+- `mint(address, uint256)` callable only by minter
 
-`ReviewerMultisig.sol`: fixed 3-of-5 multisig set at deploy time; approves cases from PENDING → ACTIVE.
+### PawLedger.sol
+Core escrow. Key structs:
+- `Case`: rescuer, ipfsMetadata, goalAmount, raisedAmount, deadline, status (`PENDING|ACTIVE|CLOSED|REFUNDED`), milestoneCount, approvalCount
+- `Milestone`: evidenceIPFS, description, requestAmount, approveWeight, rejectWeight, submittedAt, status (`PENDING|APPROVED|REJECTED`), fundsReleased
+
+Key mappings: `isReviewer`, `totalDonated`, `donations[caseId][donor]`, `hasVoted[caseId][milestoneIdx][donor]`, `hasReviewed[caseId][reviewer]`
+
+Key functions: `submitCase`, `reviewCase`, `donate`, `becomeReviewer`, `submitMilestone`, `voteMilestone`, `withdrawMilestone`, `claimRefund`
+
+**Reviewer system**: deployer is auto-registered as first reviewer; any donor with `totalDonated >= reviewerThreshold` (default 0.1 AVAX) can call `becomeReviewer()`; each review mints 10 $PAW
+
+**Voting**: weight = `donations[caseId][voter] / raisedAmount`. Release at >50% approve; blocked if >30% reject within 48h of submission
+
+**Deployment order**:
+1. Deploy `PawToken(deployer)`
+2. Deploy `PawLedger(pawTokenAddr, 0.1 ether, 1)` — deployer auto-becomes first reviewer
+3. Call `pawToken.setMinter(pawLedgerAddr)`
 
 ## Frontend Architecture
 
-- **Framework**: React (Vite)
-- **Web3**: Ethers.js v6
+### Tech Stack
+- **Framework**: React + Vite
 - **Styling**: Tailwind CSS
+- **Web3**: Ethers.js v6
 - **Wallet**: MetaMask / Core Wallet (Avalanche-native)
-- **Storage**: IPFS (mock hash in MVP)
+- **Storage**: IPFS (mock CID in MVP)
+- **i18n**: custom `LocaleContext` + `useLocale()` hook; `locales/zh.json` (default) + `locales/en.json`
 
-All contract interactions go through `hooks/useContract.js`. Wallet state lives in `hooks/useWallet.js`.
+### Routes & Role Separation
+| Path | Page | Roles |
+|---|---|---|
+| `/` | Home | all |
+| `/cases` | CaseBrowser | all |
+| `/case/:id` | CaseDetail | all |
+| `/submit` | SubmitCase | rescuer |
+| `/dashboard/rescuer` | RescuerDashboard | rescuer |
+| `/dashboard/donor` | DonorDashboard | donor |
+| `/dashboard/reviewer` | ReviewerDashboard | reviewer |
 
-## Key UX Constraints
+### Hook Responsibilities
+- `useWallet` — wallet connection, Fuji network switch
+- `useContract` — ethers Contract instances for PawLedger + PawToken
+- `useCases` — case list and detail queries
+- `useMilestones` — milestone read/write/vote
+- `useReviewer` — reviewer status, pending queue, review actions
+- `useDonor` — donate, refund
+- `useUserRole` — derives current wallet role (rescuer / donor / reviewer)
+- `useLocale` — current lang, toggle, `t(key)` translation
 
-- Display Avalanche confirmation time in UI (target: ~0.8s) — this is a core demo talking point
-- Expense ledger is a chronological on-chain timeline, not a database query
-- Donor vote percentages must update live as votes arrive
-- Mobile-friendly layout required
+### Key UX Rules
+- **Avalanche speed**: `TxConfirmation` component measures and displays "Confirmed in X.Xs" — core demo talking point (target ~0.8s)
+- **ExpenseLedger**: chronological on-chain event timeline, not a table/query
+- **VotePanel**: live vote percentage updates with each new vote
+- **Mobile**: all pages must be responsive
+- **Bilingual**: default Chinese; English toggle in top-right; every UI string goes through `t(key)`
+
+## Build Order
+
+1. `PawToken.sol` + tests
+2. `PawLedger.sol` + tests
+3. Deploy script (`PawToken` → `PawLedger` → `setMinter`)
+4. Frontend scaffold (Vite + Tailwind + routing + wallet + i18n skeleton)
+5. `useContract`, `useWallet` hooks
+6. Home + CaseBrowser + CaseDetail (public flows)
+7. SubmitCase + RescuerDashboard (rescuer flow)
+8. DonateModal + DonorDashboard (donor flow)
+9. ReviewerDashboard (reviewer flow)
+10. MilestoneTimeline + VotePanel (milestone voting UX)
+11. Polish: TxConfirmation timer, bilingual strings, mobile responsive, demo prep
 
 ## Working Style
 
