@@ -12,7 +12,7 @@
 - [x] Routing skeleton (App.jsx)
 - [x] i18n skeleton (locales + useLocale)
 - [x] useWallet hook
-- [ ] useContract hook
+- [x] useContract hook
 
 ## Phase 3: Public Flows
 - [ ] Home page
