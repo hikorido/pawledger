@@ -1,4 +1,25 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-// TODO: implement PawToken ERC-20 with single minter
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract PawToken is ERC20, Ownable {
+    address public minter;
+
+    event MinterSet(address indexed minter);
+
+    constructor(address _owner) ERC20("PawToken", "$PAW") Ownable(_owner) {}
+
+    function setMinter(address _minter) external onlyOwner {
+        require(minter == address(0), "Minter already set");
+        require(_minter != address(0), "Zero address");
+        minter = _minter;
+        emit MinterSet(_minter);
+    }
+
+    function mint(address to, uint256 amount) external {
+        require(msg.sender == minter, "Not minter");
+        _mint(to, amount);
+    }
+}
