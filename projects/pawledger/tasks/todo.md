@@ -11,7 +11,7 @@
 - [x] Vite + Tailwind + React project structure
 - [x] Routing skeleton (App.jsx)
 - [x] i18n skeleton (locales + useLocale)
-- [ ] useWallet hook
+- [x] useWallet hook
 - [ ] useContract hook
 
 ## Phase 3: Public Flows
