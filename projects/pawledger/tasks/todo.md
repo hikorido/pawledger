@@ -16,7 +16,7 @@
 
 ## Phase 3: Public Flows
 - [x] Home page
-- [ ] CaseBrowser page
+- [x] CaseBrowser page
 - [ ] CaseDetail page
 
 ## Phase 4: Rescuer Flow
