@@ -56,11 +56,11 @@
 - [x] `updateRequiredApprovals` / `updateReviewerThreshold`: owner succeeds; non-owner reverts
 
 ### 1.7 Deploy Script (`deploy.js`)
-- [ ] Deploy `PawToken(deployer)`
-- [ ] Deploy `PawLedger(pawTokenAddr, 0.1 ether, 1)`
-- [ ] Call `pawToken.setMinter(pawLedgerAddr)`
-- [ ] Print both contract addresses
-- [ ] Verify deploys work: `npx hardhat run deploy.js --network fuji`
+- [x] Deploy `PawToken(deployer)`
+- [x] Deploy `PawLedger(pawTokenAddr, 0.1 ether, 1)`
+- [x] Call `pawToken.setMinter(pawLedgerAddr)`
+- [x] Print both contract addresses
+- [x] Verify deploys work: `npx hardhat run deploy.js --network fuji`
 
 ---
 
