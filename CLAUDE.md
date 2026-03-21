@@ -231,3 +231,13 @@ Key functions: `submitCase`, `reviewCase`, `donate`, `becomeReviewer`, `submitMi
 ## Language
 - **Frontend**: Must support both Chinese (zh) and English (en) — all UI text should be bilingual; Chinese is the default language
 - **Documents**: Before writing any README or other documentation, ask the user which language to use
+
+## Standing Rules (always follow these, every task, no exceptions)
+
+After completing every single task:
+1. Update TODO.md — mark the completed task as checked, add any newly discovered sub-tasks
+2. Stage and commit — git add only the files changed in this task, then git commit with a clear message in this format: `[phase] short description of what was done`
+3. State what you just committed and what the next task is before stopping
+
+Never batch multiple tasks into one commit.
+Never skip the TODO update even if the task was small.
