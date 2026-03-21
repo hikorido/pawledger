@@ -44,16 +44,16 @@
 - [x] `claimRefund(uint256 caseId)` — donor; deadline passed + case not CLOSED; proportional refund; marks case REFUNDED
 
 ### 1.6 PawLedger Tests (`test/PawLedger.test.js`)
-- [ ] Deploy both contracts and call `setMinter`
-- [ ] `submitCase` creates PENDING case with correct fields
-- [ ] `reviewCase`: approve activates case when threshold met; mints PAW; double-review reverts
-- [ ] `donate`: records donation; reverts on non-ACTIVE case
-- [ ] `becomeReviewer`: works at threshold; reverts below threshold
-- [ ] `submitMilestone`: rescuer submits; non-rescuer reverts
-- [ ] `voteMilestone`: weight-based vote; auto-approve >50%; auto-reject >30% within 48h; `hasVoted` guard
-- [ ] `withdrawMilestone`: releases funds to rescuer; double-withdraw reverts
-- [ ] `claimRefund`: refunds proportionally after deadline; reverts before deadline
-- [ ] `updateRequiredApprovals` / `updateReviewerThreshold`: owner succeeds; non-owner reverts
+- [x] Deploy both contracts and call `setMinter`
+- [x] `submitCase` creates PENDING case with correct fields
+- [x] `reviewCase`: approve activates case when threshold met; mints PAW; double-review reverts
+- [x] `donate`: records donation; reverts on non-ACTIVE case
+- [x] `becomeReviewer`: works at threshold; reverts below threshold
+- [x] `submitMilestone`: rescuer submits; non-rescuer reverts
+- [x] `voteMilestone`: weight-based vote; auto-approve >50%; auto-reject >30% within 48h; `hasVoted` guard
+- [x] `withdrawMilestone`: releases funds to rescuer; double-withdraw reverts
+- [x] `claimRefund`: refunds proportionally after deadline; reverts before deadline
+- [x] `updateRequiredApprovals` / `updateReviewerThreshold`: owner succeeds; non-owner reverts
 
 ### 1.7 Deploy Script (`deploy.js`)
 - [ ] Deploy `PawToken(deployer)`

@@ -46,6 +46,10 @@ contract PawLedger is Ownable {
     /// @dev Tracks ETH currently held per case (decremented on withdraw/refund)
     mapping(uint256 => uint256) public caseBalance;
 
+    /// @dev Snapshot of caseBalance at the moment the first refund is claimed.
+    ///      All donors use this fixed denominator so refund order doesn't matter.
+    mapping(uint256 => uint256) public refundSnapshot;
+
     // ─── Mappings ────────────────────────────────────────────────────────────
 
     mapping(address => bool)    public isReviewer;
@@ -284,17 +288,19 @@ contract PawLedger is Ownable {
         uint256 donated = donations[caseId][msg.sender];
         require(donated > 0, "Nothing to refund");
 
-        // Proportional share of currently remaining funds
-        uint256 refund = donated * caseBalance[caseId] / c.raisedAmount;
+        // Snapshot balance on first refund so order of claims doesn't matter
+        if (c.status != CaseStatus.REFUNDED) {
+            c.status = CaseStatus.REFUNDED;
+            refundSnapshot[caseId] = caseBalance[caseId];
+        }
+
+        // Each donor's share = their donation / total raised * snapshot balance
+        uint256 refund = donated * refundSnapshot[caseId] / c.raisedAmount;
         require(refund > 0, "Zero refund");
 
         // Zero out to prevent re-entry / double refund
         donations[caseId][msg.sender] = 0;
         caseBalance[caseId] -= refund;
-
-        if (c.status != CaseStatus.REFUNDED) {
-            c.status = CaseStatus.REFUNDED;
-        }
 
         emit RefundClaimed(caseId, msg.sender, refund);
         (bool ok, ) = msg.sender.call{value: refund}("");
