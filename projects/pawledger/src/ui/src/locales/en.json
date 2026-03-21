@@ -1,0 +1,12 @@
+{
+  "app.name": "PawLedger",
+  "nav.home": "Home",
+  "nav.cases": "Browse Cases",
+  "nav.submit": "Submit Case",
+  "nav.dashboard.rescuer": "Rescuer Dashboard",
+  "nav.dashboard.donor": "Donor Dashboard",
+  "nav.dashboard.reviewer": "Reviewer Dashboard",
+  "wallet.connect": "Connect Wallet",
+  "wallet.connected": "Connected",
+  "wallet.switch_network": "Switch to Fuji Testnet"
+}

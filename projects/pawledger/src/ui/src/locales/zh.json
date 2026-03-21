@@ -1,0 +1,12 @@
+{
+  "app.name": "爪爪筹",
+  "nav.home": "首页",
+  "nav.cases": "浏览案例",
+  "nav.submit": "提交救助",
+  "nav.dashboard.rescuer": "救助者中心",
+  "nav.dashboard.donor": "捐助者中心",
+  "nav.dashboard.reviewer": "审核者中心",
+  "wallet.connect": "连接钱包",
+  "wallet.connected": "已连接",
+  "wallet.switch_network": "切换至 Fuji 测试网"
+}
