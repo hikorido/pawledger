@@ -34,14 +34,14 @@
 - [x] `updateReviewerThreshold(uint256)` — `onlyOwner`
 
 ### 1.5 PawLedger.sol — Core Functions
-- [ ] `submitCase(string ipfs, uint256 goal, uint256 durationDays, uint256 milestoneCount)` — creates PENDING case
-- [ ] `reviewCase(uint256 caseId, bool approve)` — reviewer only; mints 10 PAW; activates when approvalCount >= requiredApprovals; `hasReviewed` guard
-- [ ] `donate(uint256 caseId)` — payable; ACTIVE cases only; updates `donations` + `totalDonated`
-- [ ] `becomeReviewer()` — requires `totalDonated >= reviewerThreshold`; sets `isReviewer`
-- [ ] `submitMilestone(uint256 caseId, uint256 idx, string ipfs, string desc, uint256 amount)` — rescuer only; ACTIVE case; sets milestone PENDING
-- [ ] `voteMilestone(uint256 caseId, uint256 idx, bool approve)` — donor only; `hasVoted` guard; updates weights; auto-approve at >50%; auto-reject at >30% within 48h
-- [ ] `withdrawMilestone(uint256 caseId, uint256 idx)` — rescuer only; APPROVED + not released; transfers funds; marks `fundsReleased`
-- [ ] `claimRefund(uint256 caseId)` — donor; deadline passed + case not CLOSED; proportional refund; marks case REFUNDED
+- [x] `submitCase(string ipfs, uint256 goal, uint256 durationDays, uint256 milestoneCount)` — creates PENDING case
+- [x] `reviewCase(uint256 caseId, bool approve)` — reviewer only; mints 10 PAW; activates when approvalCount >= requiredApprovals; `hasReviewed` guard
+- [x] `donate(uint256 caseId)` — payable; ACTIVE cases only; updates `donations` + `totalDonated`
+- [x] `becomeReviewer()` — requires `totalDonated >= reviewerThreshold`; sets `isReviewer`
+- [x] `submitMilestone(uint256 caseId, uint256 idx, string ipfs, string desc, uint256 amount)` — rescuer only; ACTIVE case; sets milestone PENDING
+- [x] `voteMilestone(uint256 caseId, uint256 idx, bool approve)` — donor only; `hasVoted` guard; updates weights; auto-approve at >50%; auto-reject at >30% within 48h
+- [x] `withdrawMilestone(uint256 caseId, uint256 idx)` — rescuer only; APPROVED + not released; transfers funds; marks `fundsReleased`
+- [x] `claimRefund(uint256 caseId)` — donor; deadline passed + case not CLOSED; proportional refund; marks case REFUNDED
 
 ### 1.6 PawLedger Tests (`test/PawLedger.test.js`)
 - [ ] Deploy both contracts and call `setMinter`
