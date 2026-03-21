@@ -8,30 +8,30 @@
 ## Phase 1: Smart Contracts
 
 ### 1.1 PawToken.sol
-- [ ] Inherit OpenZeppelin `ERC20`
-- [ ] Add `address public minter` state variable
-- [ ] `constructor(address _owner)` — set owner, no initial supply
-- [ ] `setMinter(address)` — `onlyOwner`, callable once, sets minter
-- [ ] `mint(address, uint256)` — `onlyMinter`
+- [x] Inherit OpenZeppelin `ERC20`
+- [x] Add `address public minter` state variable
+- [x] `constructor(address _owner)` — set owner, no initial supply
+- [x] `setMinter(address)` — `onlyOwner`, callable once, sets minter
+- [x] `mint(address, uint256)` — `onlyMinter`
 
 ### 1.2 PawToken Tests (`test/PawToken.test.js`)
-- [ ] Deploy and verify name/symbol/decimals
-- [ ] `setMinter` works for owner, reverts for non-owner
-- [ ] `mint` works for minter, reverts for non-minter
-- [ ] Double-`setMinter` reverts
+- [x] Deploy and verify name/symbol/decimals
+- [x] `setMinter` works for owner, reverts for non-owner
+- [x] `mint` works for minter, reverts for non-minter
+- [x] Double-`setMinter` reverts
 
 ### 1.3 PawLedger.sol — Data Structures
-- [ ] `CaseStatus` enum: `PENDING | ACTIVE | CLOSED | REFUNDED`
-- [ ] `MilestoneStatus` enum: `PENDING | APPROVED | REJECTED`
-- [ ] `Case` struct (rescuer, ipfsMetadata, goalAmount, raisedAmount, deadline, status, milestoneCount, approvalCount)
-- [ ] `Milestone` struct (evidenceIPFS, description, requestAmount, approveWeight, rejectWeight, submittedAt, status, fundsReleased)
-- [ ] Mappings: `isReviewer`, `totalDonated`, `donations[caseId][donor]`, `hasVoted[caseId][milestoneIdx][donor]`, `hasReviewed[caseId][reviewer]`
-- [ ] State vars: `pawToken`, `reviewerThreshold`, `requiredApprovals`, `cases[]`, `milestones[caseId][]`
+- [x] `CaseStatus` enum: `PENDING | ACTIVE | CLOSED | REFUNDED`
+- [x] `MilestoneStatus` enum: `PENDING | APPROVED | REJECTED`
+- [x] `Case` struct (rescuer, ipfsMetadata, goalAmount, raisedAmount, deadline, status, milestoneCount, approvalCount)
+- [x] `Milestone` struct (evidenceIPFS, description, requestAmount, approveWeight, rejectWeight, submittedAt, status, fundsReleased)
+- [x] Mappings: `isReviewer`, `totalDonated`, `donations[caseId][donor]`, `hasVoted[caseId][milestoneIdx][donor]`, `hasReviewed[caseId][reviewer]`
+- [x] State vars: `pawToken`, `reviewerThreshold`, `requiredApprovals`, `cases[]`, `milestones[caseId][]`
 
 ### 1.4 PawLedger.sol — Constructor & Owner Functions
-- [ ] `constructor(address pawTokenAddr, uint256 threshold, uint256 approvals)` — stores config, registers deployer as first reviewer
-- [ ] `updateRequiredApprovals(uint256)` — `onlyOwner`
-- [ ] `updateReviewerThreshold(uint256)` — `onlyOwner`
+- [x] `constructor(address pawTokenAddr, uint256 threshold, uint256 approvals)` — stores config, registers deployer as first reviewer
+- [x] `updateRequiredApprovals(uint256)` — `onlyOwner`
+- [x] `updateReviewerThreshold(uint256)` — `onlyOwner`
 
 ### 1.5 PawLedger.sol — Core Functions
 - [ ] `submitCase(string ipfs, uint256 goal, uint256 durationDays, uint256 milestoneCount)` — creates PENDING case
