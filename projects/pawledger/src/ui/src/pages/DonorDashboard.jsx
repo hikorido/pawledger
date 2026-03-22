@@ -174,7 +174,7 @@ export default function DonorDashboard() {
                       size="sm"
                       variant="outline"
                     >
-                      退款
+                      {t("donor.refund")}
                     </Button>
                   )}
                 </div>

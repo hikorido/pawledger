@@ -34,7 +34,7 @@ export default function ExpenseLedger({ caseId }) {
   if (events.length === 0) {
     return (
       <p className="text-sm text-gray-400 text-center py-4">
-        暂无支出记录
+        {t("ledger.no_records")}
       </p>
     );
   }

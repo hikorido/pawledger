@@ -95,7 +95,7 @@ function MilestoneActions({ caseData }) {
             {t("rescuer.submit_milestone")} #{nextIdx + 1}
           </p>
           <Input
-            placeholder="里程碑描述"
+            placeholder={t("rescuer.milestone_desc_placeholder")}
             value={submitForm.desc}
             onChange={(e) => setSubmitForm((f) => ({ ...f, desc: e.target.value }))}
           />
@@ -103,7 +103,7 @@ function MilestoneActions({ caseData }) {
             type="number"
             step="0.001"
             min="0.001"
-            placeholder="申请金额 (AVAX)"
+            placeholder={t("rescuer.milestone_amount_placeholder")}
             value={submitForm.amount}
             onChange={(e) => setSubmitForm((f) => ({ ...f, amount: e.target.value }))}
           />

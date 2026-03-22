@@ -106,7 +106,7 @@ export default function SubmitCase() {
             label={t("submit.case_title")}
             value={form.title}
             onChange={set("title")}
-            placeholder="流浪猫救助计划"
+            placeholder={t("submit.case_title_placeholder")}
             error={errors.title}
           />
           <div className="space-y-1">
@@ -118,7 +118,7 @@ export default function SubmitCase() {
               onChange={set("description")}
               rows={4}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none"
-              placeholder="详细描述救助情况..."
+              placeholder={t("submit.description_placeholder")}
             />
           </div>
           <Input

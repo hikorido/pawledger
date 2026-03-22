@@ -18,7 +18,7 @@ export default function MilestoneTimeline({ caseId, milestones, loading, raisedA
   if (!milestones || milestones.length === 0) {
     return (
       <div className="text-center py-8 text-gray-400 text-sm">
-        {t("milestone.title")} — 暂无里程碑记录
+        {t("milestone.no_records")}
       </div>
     );
   }

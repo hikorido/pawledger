@@ -12,7 +12,7 @@ import Loading from "../components/common/Loading";
 export default function ReviewerDashboard() {
   const { t } = useLocale();
   const { account, isConnected } = useWallet();
-  const { isReviewer } = useUserRole();
+  const { isReviewer, reviewerThreshold } = useUserRole();
   const { cases, loading: loadingCases, refresh } = useCases();
   const { pawBalance, checkReviewed } = useReviewer();
   const [reviewedMap, setReviewedMap] = useState({});
@@ -42,8 +42,12 @@ export default function ReviewerDashboard() {
     return (
       <div className="max-w-3xl mx-auto px-4 py-20 text-center text-gray-400">
         <p className="text-4xl mb-3">🔒</p>
-        <p className="text-sm">此页面仅限审核者访问</p>
-        <p className="text-xs mt-1">捐款达到 {Number(formatEther(0n)).toFixed(2)} AVAX 后可申请成为审核者</p>
+        <p className="text-sm">{t("reviewer.access_denied")}</p>
+        <p className="text-xs mt-1">
+          {t("reviewer.min_donation_prefix")}{" "}
+          {Number(formatEther(reviewerThreshold ?? 0n)).toFixed(2)}{" "}
+          {t("reviewer.min_donation_suffix")}
+        </p>
       </div>
     );
   }

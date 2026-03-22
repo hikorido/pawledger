@@ -130,5 +130,22 @@
 
   "footer.tagline": "让每一分救助都透明可信",
   "footer.built_on": "构建于 Avalanche C-Chain",
-  "footer.hackathon": "HerSolidity Mini Hackathon 2025"
+  "footer.hackathon": "HerSolidity Mini Hackathon 2025",
+
+  "case.expense_ledger": "链上支出记录",
+
+  "submit.case_title_placeholder": "流浪猫救助计划",
+  "submit.description_placeholder": "详细描述救助情况...",
+
+  "rescuer.milestone_desc_placeholder": "里程碑描述",
+  "rescuer.milestone_amount_placeholder": "申请金额 (AVAX)",
+
+  "donor.refund": "退款",
+
+  "reviewer.access_denied": "此页面仅限审核者访问",
+  "reviewer.min_donation_prefix": "捐款达到",
+  "reviewer.min_donation_suffix": "AVAX 后可申请成为审核者",
+
+  "milestone.no_records": "暂无里程碑记录",
+  "ledger.no_records": "暂无支出记录"
 }

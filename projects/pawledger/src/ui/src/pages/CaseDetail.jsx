@@ -117,7 +117,7 @@ export default function CaseDetail() {
 
       {/* Expense Ledger */}
       <section>
-        <h2 className="text-base font-semibold text-gray-900 mb-3">链上支出记录</h2>
+        <h2 className="text-base font-semibold text-gray-900 mb-3">{t("case.expense_ledger")}</h2>
         <Card className="p-4">
           <ExpenseLedger caseId={Number(id)} />
         </Card>

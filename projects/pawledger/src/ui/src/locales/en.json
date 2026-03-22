@@ -130,5 +130,22 @@
 
   "footer.tagline": "Every rescue, transparent and trustworthy",
   "footer.built_on": "Built on Avalanche C-Chain",
-  "footer.hackathon": "HerSolidity Mini Hackathon 2025"
+  "footer.hackathon": "HerSolidity Mini Hackathon 2025",
+
+  "case.expense_ledger": "On-Chain Expense Records",
+
+  "submit.case_title_placeholder": "Stray cat rescue plan",
+  "submit.description_placeholder": "Describe the rescue situation in detail...",
+
+  "rescuer.milestone_desc_placeholder": "Milestone description",
+  "rescuer.milestone_amount_placeholder": "Requested amount (AVAX)",
+
+  "donor.refund": "Claim Refund",
+
+  "reviewer.access_denied": "This page is for reviewers only",
+  "reviewer.min_donation_prefix": "Donate ≥",
+  "reviewer.min_donation_suffix": "AVAX to become a reviewer",
+
+  "milestone.no_records": "No milestones yet",
+  "ledger.no_records": "No expense records yet"
 }
