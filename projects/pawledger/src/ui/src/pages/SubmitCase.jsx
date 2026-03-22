@@ -8,8 +8,8 @@ import Input from "../components/common/Input";
 import Button from "../components/common/Button";
 import Card from "../components/common/Card";
 import TxConfirmation from "../components/modals/TxConfirmation";
-
-const MOCK_IPFS_CID = "QmMockCID000000000000000000000000000000000000000";
+import ImageUpload from "../components/common/ImageUpload";
+import { uploadFileToIPFS, hasPinataConfig } from "../utils/uploadToIPFS";
 
 export default function SubmitCase() {
   const { t } = useLocale();
@@ -24,8 +24,10 @@ export default function SubmitCase() {
     duration: "30",
     milestones: "3",
   });
+  const [images, setImages] = useState([]);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [txHash, setTxHash] = useState(null);
   const [startTime, setStartTime] = useState(null);
   const [txError, setTxError] = useState(null);
@@ -46,15 +48,31 @@ export default function SubmitCase() {
     e.preventDefault();
     if (!validate()) return;
 
-    // Build IPFS metadata JSON (mock CID in MVP — include data in string)
+    setTxError(null);
+    setLoading(true);
+
+    // Upload images to IPFS (Pinata), collect CIDs
+    let imageCIDs = [];
+    if (images.length > 0 && hasPinataConfig) {
+      setUploading(true);
+      try {
+        imageCIDs = await Promise.all(images.map((f) => uploadFileToIPFS(f)));
+        imageCIDs = imageCIDs.filter(Boolean);
+      } catch (err) {
+        setTxError(t("submit.upload_error"));
+        setLoading(false);
+        setUploading(false);
+        return;
+      }
+      setUploading(false);
+    }
+
     const metadata = JSON.stringify({
       title: form.title.trim(),
       description: form.description.trim(),
-      image: "",
+      images: imageCIDs,
     });
 
-    setTxError(null);
-    setLoading(true);
     const t0 = Date.now();
     setStartTime(t0);
 
@@ -152,11 +170,23 @@ export default function SubmitCase() {
             />
           </div>
 
+          <ImageUpload files={images} onChange={setImages} max={5} />
+
+          {!hasPinataConfig && images.length > 0 && (
+            <p className="text-xs text-amber-600 bg-amber-50 rounded-lg px-3 py-2">
+              ⚠️ {t("submit.upload_no_ipfs")}
+            </p>
+          )}
+
+          {uploading && (
+            <p className="text-xs text-emerald-600 animate-pulse">{t("submit.upload_uploading")}</p>
+          )}
+
           {txError && <p className="text-xs text-red-500">{txError}</p>}
           {startTime && !txHash && <TxConfirmation startTime={startTime} />}
 
-          <Button type="submit" disabled={loading} className="w-full">
-            {loading ? t("tx.pending") : t("submit.submit")}
+          <Button type="submit" disabled={loading || uploading} className="w-full">
+            {uploading ? t("submit.upload_uploading") : loading ? t("tx.pending") : t("submit.submit")}
           </Button>
         </form>
       </Card>

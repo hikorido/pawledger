@@ -1,7 +1,12 @@
 import { defineConfig, transformWithEsbuild } from "vite";
 import react from "@vitejs/plugin-react";
 
+// Set VITE_BASE_PATH=/pawledger/ when building for GitHub Pages.
+// Leave unset (or set to /) for Vercel / local dev.
+const base = process.env.VITE_BASE_PATH ?? "/";
+
 export default defineConfig({
+  base,
   optimizeDeps: {
     esbuildOptions: {
       loader: { ".js": "jsx" },
