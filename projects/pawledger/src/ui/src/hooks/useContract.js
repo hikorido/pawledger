@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo } from "react";
+import React, { createContext, useContext, useMemo } from "react";
 import { Contract, BrowserProvider } from "ethers";
 import { CONTRACT_ADDRESSES } from "../config";
 import PawLedgerABI from "../abis/PawLedger.json";
