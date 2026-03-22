@@ -162,7 +162,7 @@ export default function RescuerDashboard() {
               <div className="flex items-start justify-between gap-2">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <h3 className="font-semibold text-gray-900 text-sm">{c.title}</h3>
+                    <h3 className="font-semibold text-gray-900 text-sm truncate">{c.title}</h3>
                     <StatusBadge status={c.status} />
                   </div>
                   <FundingProgress raisedAmount={c.raisedAmount} goalAmount={c.goalAmount} />

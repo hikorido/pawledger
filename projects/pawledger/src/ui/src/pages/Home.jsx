@@ -56,7 +56,7 @@ export default function Home() {
       {/* Stats */}
       <section className="bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="grid grid-cols-3 gap-6 text-center">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
             <div>
               <div className="text-3xl font-bold text-gray-900">{stats.total}</div>
               <div className="text-sm text-gray-500 mt-1">{t("home.stats.cases")}</div>

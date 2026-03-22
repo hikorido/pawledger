@@ -71,7 +71,7 @@ export default function CaseDetail() {
         {caseData.description && (
           <p className="text-gray-600 leading-relaxed">{caseData.description}</p>
         )}
-        <p className="text-xs text-gray-400 font-mono">
+        <p className="text-xs text-gray-400 font-mono truncate">
           {t("case.rescuer")}: {caseData.rescuer}
         </p>
       </div>

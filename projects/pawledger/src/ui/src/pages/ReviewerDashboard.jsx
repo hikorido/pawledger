@@ -56,7 +56,7 @@ export default function ReviewerDashboard() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-10 space-y-8">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <h1 className="text-2xl font-bold text-gray-900">{t("reviewer.title")}</h1>
         <Card className="px-4 py-2 text-center">
           <p className="text-lg font-bold text-purple-600">{pawFormatted}</p>

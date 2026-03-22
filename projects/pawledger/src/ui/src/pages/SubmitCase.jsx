@@ -131,7 +131,7 @@ export default function SubmitCase() {
             placeholder="1.0"
             error={errors.goal}
           />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Input
               label={t("submit.duration")}
               type="number"

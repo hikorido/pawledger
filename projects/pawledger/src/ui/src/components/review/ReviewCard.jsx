@@ -34,7 +34,7 @@ export default function ReviewCard({ case: c, alreadyReviewed, onReviewed }) {
     <Card className="p-5 space-y-3">
       <div className="flex items-start justify-between gap-2">
         <div>
-          <h3 className="font-semibold text-gray-900 text-sm">{c.title}</h3>
+          <h3 className="font-semibold text-gray-900 text-sm truncate">{c.title}</h3>
           <p className="text-xs text-gray-500 mt-0.5 line-clamp-2">{c.description}</p>
         </div>
         <span className="text-xs text-gray-400 whitespace-nowrap">#{c.id}</span>

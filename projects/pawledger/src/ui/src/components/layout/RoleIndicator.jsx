@@ -11,7 +11,7 @@ export default function RoleIndicator() {
 
   if (isReviewer) {
     return (
-      <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-purple-100 text-purple-700">
+      <span className="text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap bg-purple-100 text-purple-700">
         {t("role.reviewer")}
       </span>
     );
@@ -19,7 +19,7 @@ export default function RoleIndicator() {
 
   if (isDonor) {
     return (
-      <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-blue-100 text-blue-700">
+      <span className="text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap bg-blue-100 text-blue-700">
         {t("role.donor")}
       </span>
     );
