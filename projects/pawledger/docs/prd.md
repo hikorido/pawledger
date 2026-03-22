@@ -10,7 +10,7 @@
 
 PawLedger is an animal rescue crowdfunding DApp on Avalanche C-Chain. Milestone-locked escrow + donor voting eliminates the trust problem in traditional rescue fundraising.
 
-**HerSolidity Mini Hackathon 2025** — 赛道1 生命与共存 + 赛道3 Avalanche 生态
+**Pink HerSolidity Hackathon 2026** — 赛道1 生命与共存 + 赛道3 Avalanche 生态
 
 ---
 

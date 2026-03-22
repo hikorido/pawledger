@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-**PawLedger** — a Web3 DApp on Avalanche C-Chain for transparent animal rescue funding. Built for the HerSolidity Mini Hackathon 2025 (赛道1 Life & Co-existence + 赛道3 Avalanche Ecosystem).
+**PawLedger** — a Web3 DApp on Avalanche C-Chain for transparent animal rescue funding. Built for the Pink HerSolidity Hackathon 2026 (赛道1 Life & Co-existence + 赛道3 Avalanche Ecosystem).
 
 ## Repository Layout
 
