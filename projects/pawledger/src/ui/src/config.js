@@ -9,6 +9,6 @@ export const NETWORK = {
 
 // Fill in after deployment
 export const CONTRACT_ADDRESSES = {
-  PawToken: "0xd0C668c6A144c46823a412971E641aAd7eae2968",
-  PawLedger: "0xf14aBf43A36500a2Cc10aEfC2d3F334f4c9ef1af",
+  PawToken: "0x2B3F619dF5d9b4f855cC2a634a2db4E4A9837267",
+  PawLedger: "0x7C2BBb15Cc5becD532ad10B696C35ebbDbFE92C3", // ERC1967Proxy
 };
