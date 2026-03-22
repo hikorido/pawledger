@@ -2,6 +2,11 @@ import { defineConfig, transformWithEsbuild } from "vite";
 import react from "@vitejs/plugin-react";
 
 export default defineConfig({
+  optimizeDeps: {
+    esbuildOptions: {
+      loader: { ".js": "jsx" },
+    },
+  },
   plugins: [
     // Pre-transform .js files containing JSX before Vite's import analysis
     {
