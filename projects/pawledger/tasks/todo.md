@@ -52,6 +52,23 @@
 - [x] Deploy to Fuji via Hardhat, fill config.js addresses (PawToken: 0xd0C668c6A144c46823a412971E641aAd7eae2968, PawLedger: 0xf14aBf43A36500a2Cc10aEfC2d3F334f4c9ef1af)
 - [ ] Demo prep
 
+## Phase 9: Image Upload
+- [x] `ImageUpload` component — drag-and-drop, preview grid, 5 photos / 5MB each
+- [x] `uploadToIPFS.js` utility — Pinata IPFS upload, reads `VITE_PINATA_JWT`
+- [x] Wire image upload into SubmitCase — uploads CIDs, stores in case metadata
+- [x] Bilingual locale strings for all upload states
+- [ ] **User action**: Create free Pinata account at pinata.cloud → get API JWT
+- [ ] **User action**: Add `VITE_PINATA_JWT=<jwt>` to `projects/pawledger/src/ui/.env`
+- [ ] Test end-to-end: upload photo → submit case → verify CID in contract metadata
+
+## Phase 10: Deployment
+- [x] `gh-pages` package installed, `build:gh` + `deploy` scripts added to package.json
+- [x] `vite.config.js`: `VITE_BASE_PATH` support for GitHub Pages base path
+- [x] `App.jsx`: `BrowserRouter` uses `import.meta.env.BASE_URL` as basename
+- [x] `public/404.html` + `index.html` redirect script for SPA client-side routing on GH Pages
+- [ ] **User action (GitHub Pages)**: run `npm run deploy` from `src/ui/` → then enable Pages in repo Settings → Source: `gh-pages` branch → URL: https://hikorido.github.io/pawledger/
+- [ ] **User action (Vercel, easier)**: vercel.com → New Project → import `hikorido/pawledger` → root dir: `projects/pawledger/src/ui` → Deploy
+
 ## Issues Found & Resolved
 - Contract source was in `contracts/contracts/` (Hardhat source dir), not root — stubs at root were dead files
 - ABI files pre-generated from the working implementation — still valid
