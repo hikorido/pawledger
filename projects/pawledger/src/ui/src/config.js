@@ -9,6 +9,6 @@ export const NETWORK = {
 
 // Fill in after deployment
 export const CONTRACT_ADDRESSES = {
-  PawToken: "",
-  PawLedger: "",
+  PawToken: "0xd0C668c6A144c46823a412971E641aAd7eae2968",
+  PawLedger: "0xf14aBf43A36500a2Cc10aEfC2d3F334f4c9ef1af",
 };

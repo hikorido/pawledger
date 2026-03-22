@@ -47,9 +47,9 @@
 ## Phase 8: Integration & Polish
 - [x] Integration tests — 7/7 passing (61 total)
 - [x] Mismatches audited: re-submission not supported in contract (documented in test E)
-- [ ] Full bilingual strings audit
-- [ ] Mobile responsive check
-- [ ] Deploy to Fuji via REMIX, fill config.js addresses
+- [x] Full bilingual strings audit
+- [x] Mobile responsive check
+- [x] Deploy to Fuji via Hardhat, fill config.js addresses (PawToken: 0xd0C668c6A144c46823a412971E641aAd7eae2968, PawLedger: 0xf14aBf43A36500a2Cc10aEfC2d3F334f4c9ef1af)
 - [ ] Demo prep
 
 ## Issues Found & Resolved
