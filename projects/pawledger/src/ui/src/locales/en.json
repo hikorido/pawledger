@@ -138,7 +138,7 @@
   "submit.description_placeholder": "Describe the rescue situation in detail...",
   "submit.upload_image": "Upload Photos",
   "submit.upload_drag": "Drag & drop or click to select",
-  "submit.upload_hint": "JPG / PNG / WebP, max 5MB each, up to 5 photos",
+  "submit.upload_hint": "JPG / PNG / WebP, max 2MB each, up to 5 photos",
   "submit.upload_uploading": "Uploading to IPFS...",
   "submit.upload_no_ipfs": "Pinata IPFS not configured — images won't be stored. Case info will still be submitted.",
   "submit.upload_error": "Image upload failed, please try again",

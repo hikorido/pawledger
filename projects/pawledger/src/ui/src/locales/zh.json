@@ -138,7 +138,7 @@
   "submit.description_placeholder": "详细描述救助情况...",
   "submit.upload_image": "上传现场图片",
   "submit.upload_drag": "拖拽或点击选择图片",
-  "submit.upload_hint": "支持 JPG / PNG / WebP，单张最大 5MB，最多 5 张",
+  "submit.upload_hint": "支持 JPG / PNG / WebP，单张最大 2MB，最多 5 张",
   "submit.upload_uploading": "上传至 IPFS 中...",
   "submit.upload_no_ipfs": "未配置 Pinata IPFS，图片将不会上传。提交后仍会记录案例基本信息。",
   "submit.upload_error": "图片上传失败，请重试",
