@@ -3,7 +3,8 @@ require("dotenv").config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  solidity: "0.8.20",
+  // Changed: bumped to 0.8.22 — required by OZ v5.6+ (ERC1967Proxy, UUPSUpgradeable)
+  solidity: "0.8.22",
   networks: {
     fuji: {
       url: "https://api.avax-test.network/ext/bc/C/rpc",
