@@ -2,7 +2,7 @@
 
 > 透明、可信的动物救助众筹平台 · Transparent animal rescue crowdfunding on-chain
 
-**HerSolidity Mini Hackathon 2025** — 赛道1 生命与共存 + 赛道3 Avalanche 生态
+**HerSolidity Hackathon 2026** — 赛道1 生命与共存 + 赛道3 Avalanche 生态
 
 ---
 
