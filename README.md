@@ -29,10 +29,10 @@ PawLedger is a Web3 DApp on Avalanche C-Chain. Milestone-locked escrow + donor v
 ## 核心机制 · Key Mechanics
 
 - **里程碑锁仓** — 资金按阶段释放，救助者提交证明后触发投票
-- **权重投票** — 投票权重与捐款比例挂钩，防 Sybil 攻击
-- **动态审核池** — 捐助者晋升审核者，审核案例获 $PAW 奖励
+- **权重投票** — 投票权重与捐款比例挂钩，防 Sybil 攻击；>50% 赞成自动通过，48h 内 >30% 反对自动拒绝
+- **动态审核池** — 捐助者晋升审核者，审核案例获 $PAW 奖励（每次 10 $PAW）
 - **$PAW 代币** — ERC-20 治理代币，审核行为的链上激励
-- **自动退款** — 截止日期未达标则资金按比例退回捐款人
+- **自动退款** — 截止日期未关闭则资金按捐款比例退回
 
 ---
 
@@ -40,31 +40,61 @@ PawLedger is a Web3 DApp on Avalanche C-Chain. Milestone-locked escrow + donor v
 
 | Layer | Tech |
 |-------|------|
-| Blockchain | Avalanche Fuji Testnet (C-Chain) |
-| Smart Contracts | Solidity + Hardhat |
-| Frontend | React + Vite + Tailwind CSS |
+| Blockchain | Avalanche Fuji Testnet (C-Chain, chainId 43113) |
+| Smart Contracts | Solidity 0.8.22 + Hardhat + OpenZeppelin v5 |
+| Upgrade Pattern | UUPS Proxy (ERC-1967) |
+| Frontend | React 18 + Vite + Tailwind CSS |
 | Web3 | Ethers.js v6 |
-| Storage | IPFS (mock in MVP) |
+| Storage | IPFS via Pinata |
 | i18n | 中文默认，支持英文切换 |
+
+---
+
+## 已部署合约 · Deployed Contracts (Fuji Testnet)
+
+| 合约 | 地址 |
+|------|------|
+| PawToken ($PAW) | `0x2B3F619dF5d9b4f855cC2a634a2db4E4A9837267` |
+| PawLedger (Proxy) | `0x7C2BBb15Cc5becD532ad10B696C35ebbDbFE92C3` |
+
+区块浏览器 · Explorer: `https://testnet.snowtrace.io`
 
 ---
 
 ## 快速开始 · Quick Start
 
+### 环境变量 · Environment
+
+在 `projects/pawledger/src/contracts/` 创建 `.env`：
+
+```
+PRIVATE_KEY=<your_deployer_wallet_key>
+```
+
+在 `projects/pawledger/src/ui/` 创建 `.env`（用于 IPFS 上传）：
+
+```
+VITE_PINATA_JWT=<your_pinata_jwt>
+```
+
 ### 合约 · Contracts
+
 ```bash
 cd projects/pawledger/src/contracts
 npm install
 npx hardhat compile
-npx hardhat test
-npx hardhat run scripts/deploy.js --network fuji
+npx hardhat test                                    # 61 tests
+npx hardhat run deploy.js --network fuji            # 重新部署
 ```
 
 ### 前端 · Frontend
+
 ```bash
 cd projects/pawledger/src/ui
 npm install
-npm run dev
+npm run dev                                         # 本地开发 http://localhost:5173
+npm run build                                       # 生产构建
+npm run deploy                                      # 部署到 GitHub Pages
 ```
 
 ---
@@ -72,9 +102,30 @@ npm run dev
 ## 合约架构 · Contract Architecture
 
 | 合约 | 用途 |
-|---|---|
-| `PawLedger.sol` | 核心托管合约：案例、捐款、里程碑、审核逻辑 |
+|------|------|
+| `PawLedgerV1.sol` | 核心托管合约（UUPS 可升级）：案例、捐款、里程碑、投票、审核逻辑 |
 | `PawToken.sol` | $PAW ERC-20 治理代币，由 PawLedger 合约铸造 |
+
+**部署顺序 · Deploy Order:**
+
+1. Deploy `PawToken(deployer)`
+2. Deploy `PawLedgerV1` implementation
+3. Deploy `ERC1967Proxy(impl, initCalldata)` → 此地址为用户交互地址
+4. Call `pawToken.setMinter(proxyAddr)`
+
+---
+
+## 页面路由 · Routes
+
+| 路径 | 页面 | 角色 |
+|------|------|------|
+| `/` | Home | 所有人 |
+| `/cases` | CaseBrowser | 所有人 |
+| `/case/:id` | CaseDetail | 所有人 |
+| `/submit` | SubmitCase | 救助者 |
+| `/dashboard/rescuer` | RescuerDashboard | 救助者 |
+| `/dashboard/donor` | DonorDashboard | 捐助者 |
+| `/dashboard/reviewer` | ReviewerDashboard | 审核者 |
 
 ---
 
@@ -89,6 +140,4 @@ npm run dev
 
 ## 文档 · Docs
 
-- [`docs/prd.md`](projects/pawledger/docs/prd.md) — 完整产品需求文档
-- [`docs/architecture.md`](projects/pawledger/docs/architecture.md) — 技术架构详解
-- [`docs/demo-script.md`](projects/pawledger/docs/demo-script.md) — 演示脚本
+- [`projects/pawledger/docs/prd.md`](projects/pawledger/docs/prd.md) — 完整产品需求文档 (v2.0)
