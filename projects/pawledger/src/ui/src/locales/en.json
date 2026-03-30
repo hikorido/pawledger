@@ -14,6 +14,7 @@
   "nav.dashboard.adopter": "Adopter Dashboard",
 
   "wallet.connect": "Connect Wallet",
+  "wallet.disconnect": "Disconnect",
   "wallet.connected": "Connected",
   "wallet.switch_network": "Switch to Fuji Testnet",
   "wallet.wrong_network": "Wrong Network",

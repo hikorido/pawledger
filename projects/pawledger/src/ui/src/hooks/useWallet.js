@@ -11,6 +11,14 @@ export function WalletProvider({ children }) {
   const [chainId, setChainId] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
 
+  const clearWalletState = useCallback(() => {
+    setAccount(null);
+    setProvider(null);
+    setSigner(null);
+    setChainId(null);
+    setIsConnected(false);
+  }, []);
+
   const connect = useCallback(async () => {
     if (!window.ethereum) {
       alert("Please install MetaMask or Core Wallet");
@@ -27,6 +35,12 @@ export function WalletProvider({ children }) {
     setChainId(Number(network.chainId));
     setIsConnected(true);
   }, []);
+
+  const disconnect = useCallback(() => {
+    // Wallet extensions generally do not allow dapps to force-disconnect.
+    // This clears local app session state so users can intentionally disconnect in the UI.
+    clearWalletState();
+  }, [clearWalletState]);
 
   const switchToFuji = useCallback(async () => {
     if (!window.ethereum) return;
@@ -59,10 +73,7 @@ export function WalletProvider({ children }) {
 
     const handleAccountsChanged = (accounts) => {
       if (accounts.length === 0) {
-        setAccount(null);
-        setIsConnected(false);
-        setProvider(null);
-        setSigner(null);
+        clearWalletState();
       } else {
         setAccount(accounts[0]);
       }
@@ -85,11 +96,11 @@ export function WalletProvider({ children }) {
       window.ethereum.removeListener("accountsChanged", handleAccountsChanged);
       window.ethereum.removeListener("chainChanged", handleChainChanged);
     };
-  }, [connect]);
+  }, [clearWalletState, connect]);
 
   return (
     <WalletContext.Provider
-      value={{ account, provider, signer, chainId, isConnected, connect, switchToFuji }}
+      value={{ account, provider, signer, chainId, isConnected, connect, disconnect, switchToFuji }}
     >
       {children}
     </WalletContext.Provider>

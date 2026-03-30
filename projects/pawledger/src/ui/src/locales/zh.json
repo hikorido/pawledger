@@ -14,6 +14,7 @@
   "nav.dashboard.adopter": "领养者中心",
 
   "wallet.connect": "连接钱包",
+  "wallet.disconnect": "断开连接",
   "wallet.connected": "已连接",
   "wallet.switch_network": "切换至 Fuji 测试网",
   "wallet.wrong_network": "错误网络",
