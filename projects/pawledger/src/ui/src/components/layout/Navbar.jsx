@@ -31,13 +31,23 @@ export default function Navbar() {
             <div className="hidden md:flex items-center gap-5">
               <Link to="/" className={linkClass("/")}>{t("nav.home")}</Link>
               <Link to="/cases" className={linkClass("/cases")}>{t("nav.cases")}</Link>
+              <Link to="/adoption/browse" className={linkClass("/adoption/browse")}>{t("nav.adoption")}</Link>
               {isConnected && (
                 <Link to="/submit" className={linkClass("/submit")}>{t("nav.submit")}</Link>
+              )}
+              {isConnected && (
+                <Link to="/adoption/publish" className={linkClass("/adoption/publish")}>{t("nav.adoption_publish")}</Link>
               )}
               {isConnected && (
                 <Link to="/dashboard/rescuer" className={linkClass("/dashboard/rescuer")}>
                   {t("nav.dashboard.rescuer")}
                 </Link>
+              )}
+              {isConnected && (
+                <Link to="/dashboard/publisher" className={linkClass("/dashboard/publisher")}>{t("nav.dashboard.publisher")}</Link>
+              )}
+              {isConnected && (
+                <Link to="/dashboard/adopter" className={linkClass("/dashboard/adopter")}>{t("nav.dashboard.adopter")}</Link>
               )}
               {isDonor && (
                 <Link to="/dashboard/donor" className={linkClass("/dashboard/donor")}>
@@ -58,6 +68,15 @@ export default function Navbar() {
             <LanguageToggle />
             <WalletConnect />
           </div>
+        </div>
+
+        {/* Mobile quick links */}
+        <div className="md:hidden flex items-center gap-4 overflow-x-auto py-2 border-t border-gray-100">
+          <Link to="/cases" className={linkClass("/cases")}>{t("nav.cases")}</Link>
+          <Link to="/adoption/browse" className={linkClass("/adoption/browse")}>{t("nav.adoption")}</Link>
+          {isConnected && (
+            <Link to="/adoption/publish" className={linkClass("/adoption/publish")}>{t("nav.adoption_publish")}</Link>
+          )}
         </div>
       </div>
     </nav>

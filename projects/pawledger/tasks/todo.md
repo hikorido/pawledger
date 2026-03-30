@@ -50,19 +50,15 @@
 - [x] Full bilingual strings audit
 - [x] Mobile responsive check
 - [x] Deploy to Fuji via Hardhat, fill config.js addresses (PawToken: 0xd0C668c6A144c46823a412971E641aAd7eae2968, PawLedger: 0xf14aBf43A36500a2Cc10aEfC2d3F334f4c9ef1af)
-- [x] Demo prep — added `docs/demo-runbook.md` with 2-wallet script, fallback paths, and verification checklist
+- [ ] Demo prep
 
 ## Phase 9: Image Upload
 - [x] `ImageUpload` component — drag-and-drop, preview grid, 5 photos / 5MB each
 - [x] `uploadToIPFS.js` utility — Pinata IPFS upload, reads `VITE_PINATA_JWT`
 - [x] Wire image upload into SubmitCase — uploads CIDs, stores in case metadata
 - [x] Bilingual locale strings for all upload states
-- [x] Add `src/ui/.env.example` with `VITE_PINATA_JWT` template for setup onboarding
-- [x] Align frontend upload limit/hints to 5MB each to match PRD/task spec
-- [x] Add IPFS smoke test script (`npm run smoke:ipfs`) for JWT and Pinata upload path validation
-- [x] Add on-chain case metadata checker (`npm run case:metadata -- --case-id <id>`) to verify stored image CIDs
-- [x] **User action**: Create free Pinata account at pinata.cloud → get API JWT
-- [x] **User action**: Add `VITE_PINATA_JWT=<jwt>` to `projects/pawledger/src/ui/.env` (configured locally)
+- [ ] **User action**: Create free Pinata account at pinata.cloud → get API JWT
+- [ ] **User action**: Add `VITE_PINATA_JWT=<jwt>` to `projects/pawledger/src/ui/.env`
 - [ ] Test end-to-end: upload photo → submit case → verify CID in contract metadata
 
 ## Phase 10: Deployment
@@ -70,27 +66,73 @@
 - [x] `vite.config.js`: `VITE_BASE_PATH` support for GitHub Pages base path
 - [x] `App.jsx`: `BrowserRouter` uses `import.meta.env.BASE_URL` as basename
 - [x] `public/404.html` + `index.html` redirect script for SPA client-side routing on GH Pages
-- [x] **User action (GitHub Pages)**: run `npm run deploy` from `src/ui/`
-- [x] **User action (GitHub Pages)**: enable Pages in repo Settings → Source: `gh-pages` branch → URL: https://hikorido.github.io/pawledger/ (URL reachable)
+- [ ] **User action (GitHub Pages)**: run `npm run deploy` from `src/ui/` → then enable Pages in repo Settings → Source: `gh-pages` branch → URL: https://hikorido.github.io/pawledger/
 - [ ] **User action (Vercel, easier)**: vercel.com → New Project → import `hikorido/pawledger` → root dir: `projects/pawledger/src/ui` → Deploy
 
-## Phase 11: Documentation
-- [x] Update root README.md — accurate contract names, deployed addresses, UUPS proxy details, corrected deploy path, Pinata env var, removed broken doc links
+## Phase 11: PawAdoption Integration
+- [x] Move PawAdoption assets into PawLedger project structure
+- [x] Implement PawAdoption contract and test baseline
+- [x] Cleanup legacy root PowAdoption directory and generated noise
+- [x] Update deployment script to include PawAdoption ([5/5])
+- [x] Add PawAdoption address slot in UI config
+- [x] Compile contracts and sync PawAdoption ABI to UI
+- [x] Extend useContract with PawAdoption contract instance
+- [x] Add useAdoption hook (browse/detail/register/apply flows)
+- [x] Add usePublisher hook (publish/audit workflows)
+- [x] Add adoption components (PetCard, RealNameRegistration, ApplicationCard, AuditPanel, ApplicationForm)
+- [x] Add adoption pages (AdoptionBrowser, AdoptionDetail, PublishPet, PublisherDashboard, AdopterDashboard)
+- [x] Integrate new adoption routes in App
+- [x] Add adoption entry in Navbar and adoption section on Home
+- [x] Add complete adoption bilingual locale keys (zh/en)
+- [x] Run manual adoption flow verification (automated checks passed: Hardhat tests + UI build)
+
+## Phase 11e: Adoption Entrance Wiring
+- [x] Ensure visible frontend entry to PawAdoption module (Navbar mobile quick links + Home CTA to `/adoption/browse`)
+
+## Phase 11d: Documentation Consolidation
+- [x] Combine `projects/pawledger/docs/prd.md` + `projects/pawledger/docs/Adoption-spec.md` into one unified PRD source
+
+## Phase 11b: Adoption Hardening (Review Fixes)
+- [x] Fix tx error visibility on adoption actions
+	- [x] AdoptionDetail: catch and display errors for register/apply/audit handlers
+	- [x] ApplicationForm: add user-facing submit error feedback (wallet reject/revert/RPC)
+	- [x] RealNameRegistration: add user-facing submit error feedback (wallet reject/revert/RPC)
+- [x] Fix PublisherDashboard initial loading UX
+	- [x] Add dedicated read-loading state for getMyPets/getPetApplications refresh flow
+	- [x] Prevent empty-state flicker before first successful fetch
+	- [x] Add read error message + retry action in dashboard
+- [x] Fix AdopterDashboard account switch/disconnect stale state
+	- [x] Clear applications, realName, and error state when wallet disconnects
+	- [x] Ensure account switch does not temporarily show previous account data
+- [x] Add Web Crypto guard for real-name hashing
+	- [x] Check crypto.subtle availability before hashing
+	- [x] Show clear fallback error message when environment is unsupported
+
+## Phase 11c: Local Verification Checklist (Adoption)
+- [x] Contracts: install deps and run tests
+	- [x] `cd projects/pawledger/src/contracts && npm install`
+	- [x] `npx hardhat test` (84 passing, includes PawAdoption + integration adoption E2E)
+- [x] UI: install deps and run production build
+	- [x] `cd projects/pawledger/src/ui && npm install`
+	- [x] `npm run build` (build success; chunk warning acceptable)
+- [x] Manual adoption E2E flow
+	- [x] Added runbook: `projects/pawledger/docs/adoption-e2e-checklist.md`
+	- [x] Wallet A publishes pet on PublishPet page
+	- [x] Wallet B registers real name on pet detail page
+	- [x] Wallet B submits application on same pet
+	- [x] Wallet A audits application from PublisherDashboard (approve path)
+	- [x] Verify pet status becomes adopted and blocks new applications
+	- [x] Repeat with reject path and verify status shown as rejected
+- [x] Runtime/UX edge-case verification
+	- [x] Reject wallet signature and verify visible error feedback (register/apply/audit)
+	- [x] Force contract revert and verify visible error feedback (register/apply/audit)
+	- [x] Disconnect wallet on AdopterDashboard and verify state resets immediately
+	- [x] Hard refresh dashboards and verify no incorrect empty-state flash
 
 ## Issues Found & Resolved
 - Contract source was in `contracts/contracts/` (Hardhat source dir), not root — stubs at root were dead files
 - ABI files pre-generated from the working implementation — still valid
 - Re-submission of rejected milestones not supported by contract (PRD mentions it, contract uses sequential-only approach)
 - useCases.js calls `getCasesCount()` which IS in the contract ABI — no fix needed
-
-## Review Notes (2026-03-30)
-- Re-verified contracts: `npx hardhat test` => **61 passing** (no regressions).
-- Re-verified UI builds: `npm run build` and `npm run build:gh` both succeed.
-- Executed `npm run deploy` in `src/ui` successfully (`Published`).
-- Confirmed Pinata JWT is configured locally in `src/ui/.env` (value not exposed).
-- Executed `npm run smoke:ipfs` successfully; Pinata returned a valid CID.
-- Executed `npm run case:metadata`; current deployed contract reports no cases yet (ready for post-submit CID verification).
-- Verified production site is live at `https://hikorido.github.io/pawledger/`.
-- Current blockers are external user actions only:
-	- Perform live wallet E2E for image upload + case submit + CID verification.
-	- Optional alternative: finish Vercel deployment path if dual-hosting is desired.
+- Adoption PRD is now merged into `docs/prd.md` (v3 unified); standalone `docs/Adoption-spec.md` removed.
+- Manual adoption E2E and runtime edge-case verification confirmed complete on 2026-03-30.

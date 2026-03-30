@@ -3,7 +3,9 @@ import { formatEther } from "ethers";
 import { useLocale } from "../hooks/useLocale";
 import { useWallet } from "../hooks/useWallet";
 import { useCases } from "../hooks/useCases";
+import { useAdoption } from "../hooks/useAdoption";
 import CaseCard from "../components/case/CaseCard";
+import PetCard from "../components/adoption/PetCard";
 import Loading from "../components/common/Loading";
 
 const HOW_STEPS = [
@@ -16,11 +18,13 @@ export default function Home() {
   const { t } = useLocale();
   const { isConnected } = useWallet();
   const { activeCases, stats, loading } = useCases();
+  const { pets, loading: petsLoading } = useAdoption();
 
   const totalRaised =
     stats.totalRaised > 0n ? Number(formatEther(stats.totalRaised)).toFixed(2) : "0";
 
   const featured = activeCases.slice(0, 3);
+  const featuredPets = pets.slice(0, 3);
 
   return (
     <div>
@@ -40,6 +44,12 @@ export default function Home() {
               className="px-6 py-3 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors"
             >
               {t("home.hero.cta.browse")}
+            </Link>
+            <Link
+              to="/adoption/browse"
+              className="px-6 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors"
+            >
+              {t("home.hero.cta.adoption")}
             </Link>
             {isConnected && (
               <Link
@@ -98,6 +108,34 @@ export default function Home() {
             <div className="text-4xl mb-3">🐱</div>
             <p className="text-sm">{t("home.featured.empty")}</p>
             <p className="text-xs mt-1 text-gray-300">{t("home.featured.empty.sub")}</p>
+          </div>
+        )}
+      </section>
+
+      {/* Featured Adoptions */}
+      <section className="max-w-7xl mx-auto px-4 py-4 pb-12">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-bold text-gray-900">{t("adoption.featured.title")}</h2>
+          <Link
+            to="/adoption/browse"
+            className="text-sm text-emerald-600 hover:text-emerald-700 font-medium"
+          >
+            {t("adoption.view_all")} →
+          </Link>
+        </div>
+
+        {petsLoading ? (
+          <Loading className="py-10" />
+        ) : featuredPets.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {featuredPets.map((pet) => (
+              <PetCard key={pet.petId} pet={pet} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-10 text-gray-400">
+            <div className="text-3xl mb-2">🐕</div>
+            <p className="text-sm">{t("adoption.empty")}</p>
           </div>
         )}
       </section>

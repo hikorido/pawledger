@@ -1,14 +1,24 @@
 # PawLedger — Product Requirements Document
 
-> Version 2.0 · 2026-03-21
+> Version 3.0 (Unified Rescue + Adoption) · 2026-03-30
 
 ---
 
 ## 项目背景 · Background
 
-爪爪筹 (PawLedger) 是部署在 Avalanche C-Chain 上的动物救助众筹 DApp。通过智能合约里程碑锁仓 + 捐助者投票机制，解决传统救助筹款中信息不透明、资金去向不可追溯的问题。
+爪爪筹 (PawLedger) 是部署在 Avalanche C-Chain 上的动物公益协作 DApp。v3 将两条业务线统一到同一份 PRD：
 
-PawLedger is an animal rescue crowdfunding DApp on Avalanche C-Chain. Milestone-locked escrow + donor voting eliminates the trust problem in traditional rescue fundraising.
+1. 救助筹款模块（里程碑锁仓 + 捐助者投票）
+2. 宠物领养模块（实名哈希存证 + 领养申请审核）
+
+通过链上规则与不可篡改记录，平台覆盖从「救助筹款」到「康复领养」的完整闭环。
+
+PawLedger is an animal welfare collaboration DApp on Avalanche C-Chain. v3 unifies two product lines in one PRD:
+
+1. Rescue crowdfunding (milestone-locked escrow + donor voting)
+2. Pet adoption (hashed real-name attestation + on-chain application audit)
+
+This enables a complete lifecycle from rescue funding to post-recovery adoption with full traceability.
 
 **Pink HerSolidity Hackathon 2026** — 赛道1 生命与共存 + 赛道3 Avalanche 生态
 
@@ -289,3 +299,125 @@ useLocale       i18n：当前语言、切换、t('key') 翻译函数
 - [ ] 双语切换在所有页面正常工作
 - [ ] 移动端布局正常
 - [ ] Avalanche 确认速度在 UI 中有明显展示
+
+---
+
+## 模块 B：宠物领养 · Module B: Pet Adoption
+
+> 本节内容整合自 `Adoption-spec.md`，该独立文档已并入本 PRD。
+
+### B1. 需求背景 · Background
+
+当前领养场景长期依赖中心化平台，存在信息删除/篡改、跨平台作恶追溯困难、领养后约束不足等问题。为形成「救治筹款 -> 康复领养 -> 可追溯约束」完整链路，平台新增宠物领养模块并采用链上不可篡改记录作为可信依据。
+
+### B2. 目标 · Goals
+
+1. 领养关键操作全链路上链，永久可审计。
+2. 使用实名信息哈希而非明文，兼顾隐私与可验证性。
+3. 实现发布宠物、实名登记、申请、审核、领养完成的完整闭环。
+4. 与筹款模块解耦但可共存于同一前端与部署体系。
+
+### B3. 角色与诉求 · Roles
+
+- 救助人 (Publisher): 发布待领养宠物，查看申请，完成审核。
+- 领养人 (Adopter): 完成实名哈希登记，提交领养申请。
+- 平台管理员 (Admin): 查看平台状态并处理异常（运维角色）。
+
+### B4. 核心功能 · Features
+
+1. 发布宠物领养信息（名称/品种/年龄/描述/图片）。
+2. 浏览与筛选领养列表（待领养/已领养）。
+3. 查看宠物详情（申请数、状态、发布者）。
+4. 领养人实名哈希登记（姓名/证件号/手机号哈希）。
+5. 提交领养申请（每地址每宠物一次）。
+6. 救助人审核申请（通过/拒绝）。
+7. 审核通过后自动置宠物为已领养并阻断新申请。
+8. 审核拒绝后维持待领养，可继续处理其他申请。
+
+### B5. 关键业务规则 · Rules
+
+1. 同一钱包地址仅可实名登记一次。
+2. 合约仅存哈希指纹，不存明文隐私。
+3. 未实名用户不可提交领养申请。
+4. 宠物被领养后不可新增申请。
+5. 仅宠物发布者可审核该宠物申请。
+6. 一份申请只能审核一次，不可反复改判。
+7. 同一宠物最多通过一份申请。
+
+### B6. 链上数据结构 · Data Model
+
+#### PetAdoption
+
+| 字段 | 类型 | 说明 |
+|---|---|---|
+| petId | uint256 | 宠物 ID（自增） |
+| publisher | address | 发布者地址 |
+| petName | string | 宠物名称 |
+| breed | string | 品种 |
+| age | uint256 | 年龄（月） |
+| description | string | 描述 |
+| imageUrl | string | 图片链接 |
+| isAdopted | bool | 是否已领养 |
+| totalApplyCount | uint256 | 申请总数 |
+
+#### AdopterRealName
+
+| 字段 | 类型 | 说明 |
+|---|---|---|
+| isVerified | bool | 是否实名 |
+| nameHash | string | 姓名哈希 |
+| idCardHash | string | 证件号哈希 |
+| phoneHash | string | 手机号哈希 |
+| registerTime | uint256 | 登记时间 |
+
+#### AdoptionApply
+
+| 字段 | 类型 | 说明 |
+|---|---|---|
+| applyId | uint256 | 申请 ID（自增） |
+| petId | uint256 | 对应宠物 ID |
+| adopter | address | 申请者地址 |
+| applyMessage | string | 申请留言 |
+| applyTime | uint256 | 申请时间 |
+| status | uint8 | 0=待审, 1=通过, 2=拒绝 |
+
+### B7. 业务流程 · Main Flows
+
+1. 发布流程：连接钱包 -> 填写宠物信息 -> 上链发布 -> 进入列表。
+2. 申请流程：实名登记 -> 浏览宠物 -> 提交申请 -> 等待审核。
+3. 审核流程：发布者查看申请 -> 通过或拒绝 -> 更新申请与宠物状态。
+4. 验证流程：输入哈希 -> 合约比对 -> 返回匹配结果。
+
+### B8. 前端范围 · Frontend Scope
+
+#### 页面
+
+- `/adoption`：领养列表
+- `/adoption/:id`：领养详情
+- `/adoption/publish`：发布宠物
+- `/dashboard/publisher`：发布者审核中心
+- `/dashboard/adopter`：领养人中心
+
+#### 组件与 Hooks
+
+- 组件：`PetCard`, `RealNameRegistration`, `ApplicationForm`, `ApplicationCard`, `AuditPanel`
+- Hooks：`useAdoption`, `usePublisher`
+
+### B9. 非功能需求 · Non-Functional
+
+1. 安全：严格角色权限校验，避免越权审核/申请。
+2. 隐私：仅哈希上链，禁止写入明文身份信息。
+3. 兼容：与 EVM 钱包兼容，运行于 Avalanche 测试网/主网。
+4. 性能：列表与详情查询维持可接受交互延迟。
+
+### B10. 联合验收标准 · Unified Acceptance
+
+在原筹款模块验收项基础上，新增领养模块验收项：
+
+- [ ] 发布宠物 -> 领养详情可查询并状态正确
+- [ ] 领养人实名登记成功且重复登记被拒绝
+- [ ] 同一宠物重复申请被拒绝
+- [ ] 非发布者审核申请被拒绝
+- [ ] 审核通过后宠物状态为已领养并阻断新申请
+- [ ] 审核拒绝后宠物保持待领养并可继续审核其他申请
+
