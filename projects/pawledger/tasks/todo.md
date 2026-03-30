@@ -113,6 +113,7 @@
 	- [x] `cd projects/pawledger/src/ui && npm install`
 	- [x] `npm run build` (build success; chunk warning acceptable)
 - [ ] Manual adoption E2E flow
+	- [x] Added runbook: `projects/pawledger/docs/adoption-e2e-checklist.md`
 	- [ ] Wallet A publishes pet on PublishPet page
 	- [ ] Wallet B registers real name on pet detail page
 	- [ ] Wallet B submits application on same pet
