@@ -11,6 +11,11 @@ import SubmitCase from "./pages/SubmitCase";
 import RescuerDashboard from "./pages/RescuerDashboard";
 import DonorDashboard from "./pages/DonorDashboard";
 import ReviewerDashboard from "./pages/ReviewerDashboard";
+import AdoptionBrowser from "./pages/AdoptionBrowser";
+import AdoptionDetail from "./pages/AdoptionDetail";
+import PublishPet from "./pages/PublishPet";
+import PublisherDashboard from "./pages/PublisherDashboard";
+import AdopterDashboard from "./pages/AdopterDashboard";
 
 export default function App() {
   return (
@@ -25,10 +30,15 @@ export default function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/cases" element={<CaseBrowser />} />
                   <Route path="/case/:id" element={<CaseDetail />} />
+                  <Route path="/adoption/browse" element={<AdoptionBrowser />} />
+                  <Route path="/adoption/:petId" element={<AdoptionDetail />} />
                   <Route path="/submit" element={<SubmitCase />} />
+                  <Route path="/adoption/publish" element={<PublishPet />} />
                   <Route path="/dashboard/rescuer" element={<RescuerDashboard />} />
                   <Route path="/dashboard/donor" element={<DonorDashboard />} />
                   <Route path="/dashboard/reviewer" element={<ReviewerDashboard />} />
+                  <Route path="/dashboard/publisher" element={<PublisherDashboard />} />
+                  <Route path="/dashboard/adopter" element={<AdopterDashboard />} />
                 </Routes>
               </main>
               <Footer />
