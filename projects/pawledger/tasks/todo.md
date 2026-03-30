@@ -86,6 +86,9 @@
 - [x] Add complete adoption bilingual locale keys (zh/en)
 - [ ] Run manual adoption flow verification (automated checks passed: Hardhat tests + UI build)
 
+## Phase 11d: Documentation Consolidation
+- [x] Combine `projects/pawledger/docs/prd.md` + `projects/pawledger/docs/Adoption-spec.md` into one unified PRD source
+
 ## Phase 11b: Adoption Hardening (Review Fixes)
 - [x] Fix tx error visibility on adoption actions
 	- [x] AdoptionDetail: catch and display errors for register/apply/audit handlers
@@ -127,3 +130,4 @@
 - ABI files pre-generated from the working implementation — still valid
 - Re-submission of rejected milestones not supported by contract (PRD mentions it, contract uses sequential-only approach)
 - useCases.js calls `getCasesCount()` which IS in the contract ABI — no fix needed
+- Adoption PRD is now merged into `docs/prd.md` (v3 unified); standalone `docs/Adoption-spec.md` removed.
