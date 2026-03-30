@@ -132,6 +132,9 @@
 ## Phase 11f: Adoption Routing Hotfix
 - [x] Fix blank `发布宠物` page by registering missing adoption routes in `App.jsx` (`/adoption/publish`, `/adoption/browse`, `/adoption/:petId`, publisher/adopter dashboards)
 
+## Phase 11g: Adoption Contract Provider Hotfix
+- [x] Fix `Contract not connected` on PublishPet by wiring `PawAdoption` instance in `useContract` provider
+
 ## Issues Found & Resolved
 - Contract source was in `contracts/contracts/` (Hardhat source dir), not root — stubs at root were dead files
 - ABI files pre-generated from the working implementation — still valid
@@ -140,3 +143,4 @@
 - Adoption PRD is now merged into `docs/prd.md` (v3 unified); standalone `docs/Adoption-spec.md` removed.
 - Manual adoption E2E and runtime edge-case verification confirmed complete on 2026-03-30.
 - Adoption navbar links existed before matching router routes, which caused blank content on unmatched paths; fixed by explicit route registration in `App.jsx`.
+- `usePublisher`/`useAdoption` depended on `pawAdoption`, but `useContract` returned only `pawLedger` and `pawToken`; fixed by adding `PawAdoption` ABI import and contract instance creation.
