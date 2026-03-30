@@ -69,6 +69,59 @@
 - [ ] **User action (GitHub Pages)**: run `npm run deploy` from `src/ui/` → then enable Pages in repo Settings → Source: `gh-pages` branch → URL: https://hikorido.github.io/pawledger/
 - [ ] **User action (Vercel, easier)**: vercel.com → New Project → import `hikorido/pawledger` → root dir: `projects/pawledger/src/ui` → Deploy
 
+## Phase 11: PawAdoption Integration
+- [x] Move PawAdoption assets into PawLedger project structure
+- [x] Implement PawAdoption contract and test baseline
+- [x] Cleanup legacy root PowAdoption directory and generated noise
+- [x] Update deployment script to include PawAdoption ([5/5])
+- [x] Add PawAdoption address slot in UI config
+- [x] Compile contracts and sync PawAdoption ABI to UI
+- [x] Extend useContract with PawAdoption contract instance
+- [x] Add useAdoption hook (browse/detail/register/apply flows)
+- [x] Add usePublisher hook (publish/audit workflows)
+- [x] Add adoption components (PetCard, RealNameRegistration, ApplicationCard, AuditPanel, ApplicationForm)
+- [x] Add adoption pages (AdoptionBrowser, AdoptionDetail, PublishPet, PublisherDashboard, AdopterDashboard)
+- [x] Integrate new adoption routes in App
+- [x] Add adoption entry in Navbar and adoption section on Home
+- [x] Add complete adoption bilingual locale keys (zh/en)
+- [ ] Run manual adoption flow verification (automated checks passed: Hardhat tests + UI build)
+
+## Phase 11b: Adoption Hardening (Review Fixes)
+- [x] Fix tx error visibility on adoption actions
+	- [x] AdoptionDetail: catch and display errors for register/apply/audit handlers
+	- [x] ApplicationForm: add user-facing submit error feedback (wallet reject/revert/RPC)
+	- [x] RealNameRegistration: add user-facing submit error feedback (wallet reject/revert/RPC)
+- [x] Fix PublisherDashboard initial loading UX
+	- [x] Add dedicated read-loading state for getMyPets/getPetApplications refresh flow
+	- [x] Prevent empty-state flicker before first successful fetch
+	- [x] Add read error message + retry action in dashboard
+- [x] Fix AdopterDashboard account switch/disconnect stale state
+	- [x] Clear applications, realName, and error state when wallet disconnects
+	- [x] Ensure account switch does not temporarily show previous account data
+- [x] Add Web Crypto guard for real-name hashing
+	- [x] Check crypto.subtle availability before hashing
+	- [x] Show clear fallback error message when environment is unsupported
+
+## Phase 11c: Local Verification Checklist (Adoption)
+- [ ] Contracts: install deps and run tests
+	- [ ] `cd projects/pawledger/src/contracts && npm install`
+	- [ ] `npx hardhat test` (expect all suites pass, including PawAdoption)
+- [x] UI: install deps and run production build
+	- [x] `cd projects/pawledger/src/ui && npm install`
+	- [x] `npm run build` (build success; chunk warning acceptable)
+- [ ] Manual adoption E2E flow
+	- [ ] Wallet A publishes pet on PublishPet page
+	- [ ] Wallet B registers real name on pet detail page
+	- [ ] Wallet B submits application on same pet
+	- [ ] Wallet A audits application from PublisherDashboard (approve path)
+	- [ ] Verify pet status becomes adopted and blocks new applications
+	- [ ] Repeat with reject path and verify status shown as rejected
+- [ ] Runtime/UX edge-case verification
+	- [ ] Reject wallet signature and verify visible error feedback (register/apply/audit)
+	- [ ] Force contract revert and verify visible error feedback (register/apply/audit)
+	- [ ] Disconnect wallet on AdopterDashboard and verify state resets immediately
+	- [ ] Hard refresh dashboards and verify no incorrect empty-state flash
+
 ## Issues Found & Resolved
 - Contract source was in `contracts/contracts/` (Hardhat source dir), not root — stubs at root were dead files
 - ABI files pre-generated from the working implementation — still valid
