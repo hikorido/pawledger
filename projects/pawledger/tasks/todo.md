@@ -59,6 +59,7 @@
 - [x] Bilingual locale strings for all upload states
 - [x] Add `src/ui/.env.example` with `VITE_PINATA_JWT` template for setup onboarding
 - [x] Align frontend upload limit/hints to 5MB each to match PRD/task spec
+- [x] Add IPFS smoke test script (`npm run smoke:ipfs`) for JWT and Pinata upload path validation
 - [x] **User action**: Create free Pinata account at pinata.cloud → get API JWT
 - [x] **User action**: Add `VITE_PINATA_JWT=<jwt>` to `projects/pawledger/src/ui/.env` (configured locally)
 - [ ] Test end-to-end: upload photo → submit case → verify CID in contract metadata
@@ -86,6 +87,7 @@
 - Re-verified UI builds: `npm run build` and `npm run build:gh` both succeed.
 - Executed `npm run deploy` in `src/ui` successfully (`Published`).
 - Confirmed Pinata JWT is configured locally in `src/ui/.env` (value not exposed).
+- Executed `npm run smoke:ipfs` successfully; Pinata returned a valid CID.
 - Verified production site is live at `https://hikorido.github.io/pawledger/`.
 - Current blockers are external user actions only:
 	- Perform live wallet E2E for image upload + case submit + CID verification.
