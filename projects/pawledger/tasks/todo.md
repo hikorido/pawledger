@@ -84,7 +84,7 @@
 - [x] Integrate new adoption routes in App
 - [x] Add adoption entry in Navbar and adoption section on Home
 - [x] Add complete adoption bilingual locale keys (zh/en)
-- [ ] Run manual adoption flow verification (automated checks passed: Hardhat tests + UI build)
+- [x] Run manual adoption flow verification (automated checks passed: Hardhat tests + UI build)
 
 ## Phase 11e: Adoption Entrance Wiring
 - [x] Ensure visible frontend entry to PawAdoption module (Navbar mobile quick links + Home CTA to `/adoption/browse`)
@@ -115,19 +115,19 @@
 - [x] UI: install deps and run production build
 	- [x] `cd projects/pawledger/src/ui && npm install`
 	- [x] `npm run build` (build success; chunk warning acceptable)
-- [ ] Manual adoption E2E flow
+- [x] Manual adoption E2E flow
 	- [x] Added runbook: `projects/pawledger/docs/adoption-e2e-checklist.md`
-	- [ ] Wallet A publishes pet on PublishPet page
-	- [ ] Wallet B registers real name on pet detail page
-	- [ ] Wallet B submits application on same pet
-	- [ ] Wallet A audits application from PublisherDashboard (approve path)
-	- [ ] Verify pet status becomes adopted and blocks new applications
-	- [ ] Repeat with reject path and verify status shown as rejected
-- [ ] Runtime/UX edge-case verification
-	- [ ] Reject wallet signature and verify visible error feedback (register/apply/audit)
-	- [ ] Force contract revert and verify visible error feedback (register/apply/audit)
-	- [ ] Disconnect wallet on AdopterDashboard and verify state resets immediately
-	- [ ] Hard refresh dashboards and verify no incorrect empty-state flash
+	- [x] Wallet A publishes pet on PublishPet page
+	- [x] Wallet B registers real name on pet detail page
+	- [x] Wallet B submits application on same pet
+	- [x] Wallet A audits application from PublisherDashboard (approve path)
+	- [x] Verify pet status becomes adopted and blocks new applications
+	- [x] Repeat with reject path and verify status shown as rejected
+- [x] Runtime/UX edge-case verification
+	- [x] Reject wallet signature and verify visible error feedback (register/apply/audit)
+	- [x] Force contract revert and verify visible error feedback (register/apply/audit)
+	- [x] Disconnect wallet on AdopterDashboard and verify state resets immediately
+	- [x] Hard refresh dashboards and verify no incorrect empty-state flash
 
 ## Issues Found & Resolved
 - Contract source was in `contracts/contracts/` (Hardhat source dir), not root — stubs at root were dead files
@@ -135,3 +135,4 @@
 - Re-submission of rejected milestones not supported by contract (PRD mentions it, contract uses sequential-only approach)
 - useCases.js calls `getCasesCount()` which IS in the contract ABI — no fix needed
 - Adoption PRD is now merged into `docs/prd.md` (v3 unified); standalone `docs/Adoption-spec.md` removed.
+- Manual adoption E2E and runtime edge-case verification confirmed complete on 2026-03-30.
