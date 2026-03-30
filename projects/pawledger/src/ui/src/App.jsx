@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LocaleProvider } from "./hooks/useLocale";
 import { WalletProvider } from "./hooks/useWallet";
 import { ContractProvider } from "./hooks/useContract";
@@ -18,11 +18,14 @@ import PublisherDashboard from "./pages/PublisherDashboard";
 import AdopterDashboard from "./pages/AdopterDashboard";
 
 export default function App() {
+  const baseUrl = import.meta.env.BASE_URL || "/";
+  const basename = baseUrl === "/" ? "/" : baseUrl.replace(/\/+$/, "");
+
   return (
     <LocaleProvider>
       <WalletProvider>
         <ContractProvider>
-          <BrowserRouter basename={import.meta.env.BASE_URL}>
+          <BrowserRouter basename={basename}>
             <div className="min-h-screen flex flex-col bg-gray-50">
               <Navbar />
               <main className="flex-1">
@@ -39,6 +42,7 @@ export default function App() {
                   <Route path="/dashboard/reviewer" element={<ReviewerDashboard />} />
                   <Route path="/dashboard/publisher" element={<PublisherDashboard />} />
                   <Route path="/dashboard/adopter" element={<AdopterDashboard />} />
+                  <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
               </main>
               <Footer />
