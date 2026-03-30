@@ -94,8 +94,13 @@ cd projects/pawledger/src/ui
 npm install
 npm run dev                                         # 本地开发 http://localhost:5173
 npm run build                                       # 生产构建
-npm run deploy                                      # 部署到 GitHub Pages
+npm run deploy                                      # 生成并同步 Pages 静态文件到仓库根目录 docs/
 ```
+
+GitHub Pages 仓库设置：
+
+- Branch: `main`
+- Folder: `/docs`
 
 ---
 
