@@ -57,6 +57,8 @@
 - [x] `uploadToIPFS.js` utility — Pinata IPFS upload, reads `VITE_PINATA_JWT`
 - [x] Wire image upload into SubmitCase — uploads CIDs, stores in case metadata
 - [x] Bilingual locale strings for all upload states
+- [x] Add `src/ui/.env.example` with `VITE_PINATA_JWT` template for setup onboarding
+- [x] Align frontend upload limit/hints to 5MB each to match PRD/task spec
 - [ ] **User action**: Create free Pinata account at pinata.cloud → get API JWT
 - [ ] **User action**: Add `VITE_PINATA_JWT=<jwt>` to `projects/pawledger/src/ui/.env`
 - [ ] Test end-to-end: upload photo → submit case → verify CID in contract metadata

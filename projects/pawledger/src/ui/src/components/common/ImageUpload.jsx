@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useLocale } from "../../hooks/useLocale";
 
-const MAX_SIZE_MB = 2;
+const MAX_SIZE_MB = 5;
 const ACCEPT = "image/jpeg,image/png,image/webp,image/gif";
 
 /**
