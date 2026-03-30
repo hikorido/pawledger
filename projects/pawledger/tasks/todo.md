@@ -79,3 +79,10 @@
 - ABI files pre-generated from the working implementation — still valid
 - Re-submission of rejected milestones not supported by contract (PRD mentions it, contract uses sequential-only approach)
 - useCases.js calls `getCasesCount()` which IS in the contract ABI — no fix needed
+
+## Review Notes (2026-03-30)
+- Re-verified contracts: `npx hardhat test` => **61 passing** (no regressions).
+- Re-verified UI builds: `npm run build` and `npm run build:gh` both succeed.
+- Current blockers are external user actions only:
+	- Provide Pinata JWT in `src/ui/.env` for real IPFS image upload E2E.
+	- Execute deployment step (`npm run deploy`) and enable hosting target (GitHub Pages or Vercel).
