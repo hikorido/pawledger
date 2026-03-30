@@ -8,6 +8,12 @@ import { useWallet } from "./useWallet";
 
 const ContractContext = createContext(null);
 
+function resolveAbi(artifactOrAbi) {
+  if (Array.isArray(artifactOrAbi)) return artifactOrAbi;
+  if (artifactOrAbi && Array.isArray(artifactOrAbi.abi)) return artifactOrAbi.abi;
+  return [];
+}
+
 export function ContractProvider({ children }) {
   const { signer, provider } = useWallet();
 
@@ -21,10 +27,14 @@ export function ContractProvider({ children }) {
     ) {
       return { pawLedger: null, pawToken: null, pawAdoption: null };
     }
+    const pawLedgerAbi = resolveAbi(PawLedgerABI);
+    const pawTokenAbi = resolveAbi(PawTokenABI);
+    const pawAdoptionAbi = resolveAbi(PawAdoptionABI);
+
     return {
-      pawLedger: new Contract(CONTRACT_ADDRESSES.PawLedger, PawLedgerABI, runner),
-      pawToken: new Contract(CONTRACT_ADDRESSES.PawToken, PawTokenABI, runner),
-      pawAdoption: new Contract(CONTRACT_ADDRESSES.PawAdoption, PawAdoptionABI, runner),
+      pawLedger: new Contract(CONTRACT_ADDRESSES.PawLedger, pawLedgerAbi, runner),
+      pawToken: new Contract(CONTRACT_ADDRESSES.PawToken, pawTokenAbi, runner),
+      pawAdoption: new Contract(CONTRACT_ADDRESSES.PawAdoption, pawAdoptionAbi, runner),
     };
   }, [signer, provider]);
 
