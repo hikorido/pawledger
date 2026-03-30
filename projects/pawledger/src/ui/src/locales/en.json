@@ -27,6 +27,7 @@
   "home.hero.title": "PawLedger — Transparent Rescue, On-Chain Trust",
   "home.hero.subtitle": "Animal rescue crowdfunding on Avalanche C-Chain. Milestone-locked escrow + donor voting — every cent traceable on-chain.",
   "home.hero.cta.browse": "Browse Cases",
+  "home.hero.cta.adoption": "Browse Adoptions",
   "home.hero.cta.submit": "Submit a Case",
   "home.stats.cases": "Rescue Cases",
   "home.stats.active": "Active",

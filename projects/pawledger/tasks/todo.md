@@ -86,6 +86,9 @@
 - [x] Add complete adoption bilingual locale keys (zh/en)
 - [ ] Run manual adoption flow verification (automated checks passed: Hardhat tests + UI build)
 
+## Phase 11e: Adoption Entrance Wiring
+- [x] Ensure visible frontend entry to PawAdoption module (Navbar mobile quick links + Home CTA to `/adoption/browse`)
+
 ## Phase 11d: Documentation Consolidation
 - [x] Combine `projects/pawledger/docs/prd.md` + `projects/pawledger/docs/Adoption-spec.md` into one unified PRD source
 
