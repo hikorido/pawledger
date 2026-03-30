@@ -59,8 +59,8 @@
 - [x] Bilingual locale strings for all upload states
 - [x] Add `src/ui/.env.example` with `VITE_PINATA_JWT` template for setup onboarding
 - [x] Align frontend upload limit/hints to 5MB each to match PRD/task spec
-- [ ] **User action**: Create free Pinata account at pinata.cloud → get API JWT
-- [ ] **User action**: Add `VITE_PINATA_JWT=<jwt>` to `projects/pawledger/src/ui/.env`
+- [x] **User action**: Create free Pinata account at pinata.cloud → get API JWT
+- [x] **User action**: Add `VITE_PINATA_JWT=<jwt>` to `projects/pawledger/src/ui/.env` (configured locally)
 - [ ] Test end-to-end: upload photo → submit case → verify CID in contract metadata
 
 ## Phase 10: Deployment
@@ -68,7 +68,8 @@
 - [x] `vite.config.js`: `VITE_BASE_PATH` support for GitHub Pages base path
 - [x] `App.jsx`: `BrowserRouter` uses `import.meta.env.BASE_URL` as basename
 - [x] `public/404.html` + `index.html` redirect script for SPA client-side routing on GH Pages
-- [ ] **User action (GitHub Pages)**: run `npm run deploy` from `src/ui/` → then enable Pages in repo Settings → Source: `gh-pages` branch → URL: https://hikorido.github.io/pawledger/
+- [x] **User action (GitHub Pages)**: run `npm run deploy` from `src/ui/`
+- [x] **User action (GitHub Pages)**: enable Pages in repo Settings → Source: `gh-pages` branch → URL: https://hikorido.github.io/pawledger/ (URL reachable)
 - [ ] **User action (Vercel, easier)**: vercel.com → New Project → import `hikorido/pawledger` → root dir: `projects/pawledger/src/ui` → Deploy
 
 ## Phase 11: Documentation
@@ -83,6 +84,9 @@
 ## Review Notes (2026-03-30)
 - Re-verified contracts: `npx hardhat test` => **61 passing** (no regressions).
 - Re-verified UI builds: `npm run build` and `npm run build:gh` both succeed.
+- Executed `npm run deploy` in `src/ui` successfully (`Published`).
+- Confirmed Pinata JWT is configured locally in `src/ui/.env` (value not exposed).
+- Verified production site is live at `https://hikorido.github.io/pawledger/`.
 - Current blockers are external user actions only:
-	- Provide Pinata JWT in `src/ui/.env` for real IPFS image upload E2E.
-	- Execute deployment step (`npm run deploy`) and enable hosting target (GitHub Pages or Vercel).
+	- Perform live wallet E2E for image upload + case submit + CID verification.
+	- Optional alternative: finish Vercel deployment path if dual-hosting is desired.
