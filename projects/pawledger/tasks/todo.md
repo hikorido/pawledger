@@ -50,7 +50,7 @@
 - [x] Full bilingual strings audit
 - [x] Mobile responsive check
 - [x] Deploy to Fuji via Hardhat, fill config.js addresses (PawToken: 0xd0C668c6A144c46823a412971E641aAd7eae2968, PawLedger: 0xf14aBf43A36500a2Cc10aEfC2d3F334f4c9ef1af)
-- [ ] Demo prep
+- [x] Demo prep — added `docs/demo-runbook.md` with 2-wallet script, fallback paths, and verification checklist
 
 ## Phase 9: Image Upload
 - [x] `ImageUpload` component — drag-and-drop, preview grid, 5 photos / 5MB each
@@ -68,6 +68,9 @@
 - [x] `public/404.html` + `index.html` redirect script for SPA client-side routing on GH Pages
 - [ ] **User action (GitHub Pages)**: run `npm run deploy` from `src/ui/` → then enable Pages in repo Settings → Source: `gh-pages` branch → URL: https://hikorido.github.io/pawledger/
 - [ ] **User action (Vercel, easier)**: vercel.com → New Project → import `hikorido/pawledger` → root dir: `projects/pawledger/src/ui` → Deploy
+
+## Phase 11: Documentation
+- [x] Update root README.md — accurate contract names, deployed addresses, UUPS proxy details, corrected deploy path, Pinata env var, removed broken doc links
 
 ## Issues Found & Resolved
 - Contract source was in `contracts/contracts/` (Hardhat source dir), not root — stubs at root were dead files
