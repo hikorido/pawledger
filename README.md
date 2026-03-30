@@ -4,6 +4,12 @@
 
 **HerSolidity Hackathon 2026** — 赛道1 生命与共存 + 赛道3 Avalanche 生态
 
+## 新手入口 · Start Here First
+
+- 在线演示（先打开）: https://hikorido.github.io/pawledger/
+- 使用流程（截图版 PDF）: https://hikorido.github.io/pawledger/guides/使用流程.pdf
+- PRD 文档（网页版）: https://hikorido.github.io/pawledger/PRD.md
+
 ---
 
 ## 简介 · About
@@ -145,4 +151,6 @@ GitHub Pages 仓库设置：
 
 ## 文档 · Docs
 
-- [`projects/pawledger/docs/prd.md`](projects/pawledger/docs/prd.md) — 完整产品需求文档 (v2.0)
+- [`projects/pawledger/docs/prd.md`](projects/pawledger/docs/prd.md) — 完整产品需求文档 (源文件)
+- [`docs/PRD.md`](docs/PRD.md) — GitHub Pages 发布版 PRD
+- [`docs/guides/使用流程.pdf`](docs/guides/%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B.pdf) — 面向非技术同学的截图流程说明
