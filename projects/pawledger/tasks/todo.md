@@ -107,7 +107,7 @@
 
 ## Phase 11c: Local Verification Checklist (Adoption)
 - [ ] Contracts: install deps and run tests
-	- [ ] `cd projects/pawledger/src/contracts && npm install`
+	- [x] `cd projects/pawledger/src/contracts && npm install`
 	- [ ] `npx hardhat test` (expect all suites pass, including PawAdoption)
 - [x] UI: install deps and run production build
 	- [x] `cd projects/pawledger/src/ui && npm install`
