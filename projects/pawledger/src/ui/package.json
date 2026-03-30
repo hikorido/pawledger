@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "build:gh": "VITE_BASE_PATH=/pawledger/ vite build",
     "deploy": "npm run build:gh && gh-pages -d dist",
-    "smoke:ipfs": "set -a && source .env && set +a && node scripts/pinata-smoke.mjs"
+    "smoke:ipfs": "set -a && source .env && set +a && node scripts/pinata-smoke.mjs",
+    "case:metadata": "node scripts/check-case-metadata.mjs"
   },
   "dependencies": {
     "ethers": "^6.0.0",
