@@ -106,9 +106,9 @@
 	- [x] Show clear fallback error message when environment is unsupported
 
 ## Phase 11c: Local Verification Checklist (Adoption)
-- [ ] Contracts: install deps and run tests
+- [x] Contracts: install deps and run tests
 	- [x] `cd projects/pawledger/src/contracts && npm install`
-	- [ ] `npx hardhat test` (expect all suites pass, including PawAdoption)
+	- [x] `npx hardhat test` (84 passing, includes PawAdoption + integration adoption E2E)
 - [x] UI: install deps and run production build
 	- [x] `cd projects/pawledger/src/ui && npm install`
 	- [x] `npm run build` (build success; chunk warning acceptable)
